@@ -4,6 +4,7 @@ const Store = [
       name: '유재석',
       role: 'user',
       email: 'yujaesuk@gmail.com',
+      availablity: 0,
       password: '1234',
     },
     {
@@ -38,6 +39,20 @@ const Store = [
       driver.position.latitude = latitude;
       driver.position.longitude = longitude;
       return driver;
+    },
+    unavailable: async (email) => {
+      const driver = Store.find((s) => s.email === email);
+      driver.availablity = 0;
+      return driver;
+    },
+    getDriver: async ( {latitude, longitude})=>{
+      // 1. 손님을 태울 준비, 운전자여야함(역할이 driver)
+      const drivers = Store.filter(
+        (s) => s.availablity == 1 && s.role == "driver"
+      )
+      return drivers;
+      // 2. 나랑 가장 가까운 운전자를 찾아야함
+      // <- 요기 알고리즘 검색알고리즘
     },
   };
   
