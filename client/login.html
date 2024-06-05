@@ -1,0 +1,31 @@
+<a href="/">메뉴로 이동</a>
+<h1>로그인</h1>
+<form id="frmLogin">
+  로그인ID(Email): <input type="text" name="email" /><br />
+  비밀번호:
+  <input type="text" name="password" />
+</form>
+<button onclick="fLogin()">로그인</button><br />
+
+<script>
+  const $ = document.querySelector.bind(document);
+  async function fLogin() {
+    var formData = new FormData($('#frmLogin'));
+    var data = {};
+    formData.forEach(function (value, key) {
+      data[key] = value;
+    });
+    alert(JSON.stringify(data));
+
+    var url = '/api/users/login';
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    const json = await response.json();
+    alert(JSON.stringify(json));
+  }
+</script>
